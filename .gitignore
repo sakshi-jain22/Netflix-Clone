@@ -55,3 +55,6 @@ yarn-error.log
 # Bundle artifact
 *.jsbundle
 
+.env
+*.code-workspace
+.eslintcache
