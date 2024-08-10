@@ -3,7 +3,7 @@ import { fetchFromTMDB } from "../services/moviedb.service.js";
 export const getTrendingMovie = async (request, response) => {
   try {
     const data = await fetchFromTMDB(
-      "https://api.themoviedb.org/3/trending/movie/day?language=en-US"
+      "https://api.themoviedb.org/3/trending/movie/day?language=en-US",
     );
 
     const randomMovie =
@@ -22,7 +22,7 @@ export const getMovieTrailers = async (request, response) => {
   try {
     const { id } = request.params;
     const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`
+      `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
     );
 
     response.status(200).json({ success: true, trailers: data.results });
@@ -42,7 +42,7 @@ export const getMovieDetails = async (request, response) => {
     const { id } = request.params;
 
     const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${id}?language=en-US`
+      `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
     );
 
     response.status(200).json({ success: true, content: data });
@@ -62,7 +62,7 @@ export const getSimilarMovies = async (request, response) => {
     const { id } = request.params;
 
     const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`
+      `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`,
     );
 
     response.status(200).json({ success: true, similar: data.results });
@@ -79,7 +79,7 @@ export const getMoviesByCategory = async (request, response) => {
     const { category } = request.params;
 
     const data = await fetchFromTMDB(
-      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`
+      `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`,
     );
 
     response.status(200).json({ success: true, content: data.results });
