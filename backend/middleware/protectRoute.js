@@ -22,7 +22,7 @@ export const protectRoute = async (request, response, next) => {
       });
     }
 
-    const user = User.findById(decoded.userId).select('-password');
+    const user = await User.findById(decoded.userId).select('-password').exec();
 
     if (!user) {
       return response.status(404).json({

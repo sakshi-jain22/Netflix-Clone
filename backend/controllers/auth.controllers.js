@@ -1,14 +1,14 @@
-import bcryptjs from "bcryptjs";
+import bcryptjs from 'bcryptjs';
 
-import { User } from "../models/user.model.js";
-import { generateTokenAndSetCookie } from "../utils/generateToken.js";
+import { User } from '../models/user.model.js';
+import { generateTokenAndSetCookie } from '../utils/generateToken.js';
 
 const PROFILE_PICS = [
-  "/avatar1.png",
-  "/avatar2.png",
-  "/avatar3.png",
-  "/avatar4.png",
-  "/avatar5.png",
+  '/avatar1.png',
+  '/avatar2.png',
+  '/avatar3.png',
+  '/avatar4.png',
+  '/avatar5.png',
 ];
 
 export const signup = async (request, response) => {
@@ -19,19 +19,19 @@ export const signup = async (request, response) => {
     if (!email || !password || !username) {
       return response
         .status(400)
-        .json({ success: false, message: "All fields are required." });
+        .json({ success: false, message: 'All fields are required.' });
     }
 
     if (!emailRegex.test(email)) {
       return response
         .status(400)
-        .json({ success: false, message: "Invalid email." });
+        .json({ success: false, message: 'Invalid email.' });
     }
 
     if (password.length < 6) {
       return response.status(400).json({
         success: false,
-        message: "Password must be atleast 6 characters.",
+        message: 'Password must be atleast 6 characters.',
       });
     }
 
@@ -40,7 +40,7 @@ export const signup = async (request, response) => {
     if (existingUserByEmail) {
       return response.status(400).json({
         success: false,
-        message: "User with this email already exists.",
+        message: 'User with this email already exists.',
       });
     }
 
@@ -49,7 +49,7 @@ export const signup = async (request, response) => {
     if (existingUserByUsername) {
       return response.status(400).json({
         success: false,
-        message: "User with this username already exists.",
+        message: 'User with this username already exists.',
       });
     }
 
@@ -70,12 +70,12 @@ export const signup = async (request, response) => {
 
     response
       .status(201)
-      .json({ success: true, user: { ...newUser._doc, password: "" } });
+      .json({ success: true, user: { ...newUser._doc, password: '' } });
   } catch (error) {
-    console.error("Error in signup controller: ", error.message);
+    console.error('Error in signup controller: ', error.message);
     return response.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: 'Internal server error',
     });
   }
 };
@@ -87,46 +87,58 @@ export const login = async (request, response) => {
     if (!email || !password) {
       return response
         .status(400)
-        .json({ success: false, message: "All fields are required." });
+        .json({ success: false, message: 'All fields are required.' });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
       return response
         .status(400)
-        .json({ success: false, message: "Invalid credentials." });
+        .json({ success: false, message: 'Invalid credentials.' });
     }
 
     const isPasswordCorrect = await bcryptjs.compare(password, user.password);
     if (!isPasswordCorrect) {
       return response
         .status(400)
-        .json({ success: false, message: "Invalid credentials." });
+        .json({ success: false, message: 'Invalid credentials.' });
     }
 
     generateTokenAndSetCookie(user._id, response);
     response
       .status(200)
-      .json({ success: true, user: { ...user._doc, password: "" } });
+      .json({ success: true, user: { ...user._doc, password: '' } });
   } catch (error) {
-    console.error("Error in login controller: ", error.message);
+    console.error('Error in login controller: ', error.message);
     return response.status(500).json({
       success: false,
-      message: "Internal server error",
+      message: 'Internal server error',
     });
   }
 };
 
 export const logout = async (request, response) => {
   try {
-    response.clearCookie("jwt-netflix");
+    response.clearCookie('jwt-netflix');
     response
       .status(200)
-      .json({ success: true, message: "Logged out successfully" });
+      .json({ success: true, message: 'Logged out successfully' });
   } catch (error) {
-    console.log("Error in logout controller: ", error.message);
+    console.log('Error in logout controller: ', error.message);
     response
       .status(500)
-      .json({ success: false, message: "Internal server error" });
+      .json({ success: false, message: 'Internal server error' });
+  }
+};
+
+export const authCheck = async (request, response) => {
+  try {
+    console.log('request.user:', request.user);
+    response.status(200).json({ success: true, user: request.user });
+  } catch (error) {
+    console.log('Error in authCheck controller', error.message);
+    response
+      .status(500)
+      .json({ success: false, message: 'Internal server error' });
   }
 };
