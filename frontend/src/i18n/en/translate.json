@@ -1,0 +1,47 @@
+{
+  "components": {
+    "authForm": {
+      "email": "Email",
+      "username": "Username",
+      "password": "Password"
+    },
+    "footer": {
+      "github": "GitHub",
+      "author": "Sakshi",
+      "title": "Built by",
+      "subTitle": ". The source code is available on"
+    }
+  },
+  "pages": {
+    "login": {
+      "title": "Login",
+      "subTitle": "Don't have an account?",
+      "routeTitle": "Sign Up"
+    },
+    "signup": {
+      "title": "Sign Up",
+      "subTitle": "Already have an account?",
+      "routeTitle": "Sign In"
+    },
+    "home": {
+      "authScreen": {
+        "headerBtn": "Sign In",
+        "heroTitle": "Unlimited movies, TV shows, and more",
+        "heroText": "Starts at ₹149. Cancel at anytime.",
+        "heroSubTitle": "Ready to watch? Enter your email to create or restart your membership.",
+        "heroBtnText": "Get Started",
+        "tvSectionTitle": "Enjoy on your TV",
+        "tvSectionSubTitle": "Watch on Smart TVs, PlayStation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.",
+        "downloading": "Downloading...",
+        "imageText": "Stranger Things",
+        "downloadTitle": "Download your shows to watch offline",
+        "downloadSubTitle": "Save your favorites easily and always have something to watch.",
+        "streamTitle": "Watch everywhere",
+        "streamSubTitle": " Stream unlimited movies and TV shows on your phone, tablet, laptop and TV.",
+        "kidsSectionTitle": "Create profiles for kids",
+        "kidsSectionSubTitle": "Send kids on adventures with their favourite characters in a space made just for them — free with your membership."
+      },
+      "homeScreen": {}
+    }
+  }
+}
