@@ -1,21 +1,19 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
+import Router from './Router';
+import StoreProvider from './StoreProvider';
 import { Footer } from './components';
-import { LoginPage, HomePage, SignUpPage } from './pages';
 
 import './i18n/i18next';
 
 const App: React.FC = () => {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-      </Routes>
+    <StoreProvider>
+      <Router />
       <Footer />
-    </>
+      <Toaster />
+    </StoreProvider>
   );
 };
 

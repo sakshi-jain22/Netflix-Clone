@@ -1,7 +1,12 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { AuthForm, AuthHeader } from '../components';
+
+import { useAuth } from '../hooks/useAuth';
+
+import { AppDispatch } from '../redux/store';
 
 const TRANSLATE_LOGIN = `pages.login`;
 
@@ -10,6 +15,9 @@ const LoginPage: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { login } = useAuth(dispatch);
 
   const handleOnEmailChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +36,7 @@ const LoginPage: React.FC = () => {
   const handleLogin = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log('handleLogin: ', { email, password });
+      login({ email, password });
     },
     [email, password],
   );

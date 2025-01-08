@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-import { Separator } from '../../components';
 
 import DevicePile from '/assets/images/device-pile.png';
 import DownloadGif from '/assets/videos/download-icon.gif';
@@ -13,10 +11,13 @@ import StrangerThingsLg from '/assets/images/stranger-things-lg.png';
 import StrangerThingsSm from '/assets/images/stranger-things-sm.png';
 import Tv from '/assets/images/tv.png';
 
+import { Separator } from '../../components';
+
 const TRANSLATE_AUTH_SCREEN = 'pages.home.authScreen';
 
 const AuthScreen: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
 
@@ -25,6 +26,14 @@ const AuthScreen: React.FC = () => {
       setEmail(event.target.value);
     },
     [],
+  );
+
+  const handleOnFormSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      navigate('/signup?email=' + email);
+    },
+    [email],
   );
 
   return (
@@ -45,7 +54,9 @@ const AuthScreen: React.FC = () => {
         <p className="text-lg mb-4">{t(`${TRANSLATE_AUTH_SCREEN}.heroText`)}</p>
         <p className="mb-4">{t(`${TRANSLATE_AUTH_SCREEN}.heroSubTitle`)}</p>
 
-        <form className="flex flex-col md:flex-row gap-4 w-1/2">
+        <form
+          className="flex flex-col md:flex-row gap-4 w-1/2"
+          onSubmit={handleOnFormSubmit}>
           <input
             className="p-2 rounded flex-1 bg-black/80 border border-gray-700"
             id="email"
@@ -118,11 +129,7 @@ const AuthScreen: React.FC = () => {
                     </span>
                   </div>
 
-                  <img
-                    src={DownloadGif} // "/assets/download-icon.gif"
-                    alt="Download Icon"
-                    className="h-12"
-                  />
+                  <img src={DownloadGif} alt="Download Icon" className="h-12" />
                 </div>
               </div>
             </div>

@@ -1,21 +1,31 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { AuthForm, AuthHeader } from '../components';
+
+import { useAuth } from '../hooks/useAuth';
+
+import { AppDispatch } from '../redux/store';
 
 const TRANSLATE_SIGNUP = 'pages.signup';
 
 const SignUpPage: React.FC = () => {
   const { t } = useTranslation();
+  const { searchParams } = new URL(document.location);
 
-  const [email, setEmail] = useState('');
+  const emailValue = searchParams.get('email');
+  const dispatch = useDispatch<AppDispatch>();
+  const [email, setEmail] = useState(emailValue || '');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const { signup } = useAuth(dispatch);
 
   const handleSignup = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log('handleSignup: ', { email, username, password });
+      signup({ email, username, password });
     },
     [email, username, password],
   );
